@@ -89,19 +89,14 @@ pub enum Command {
 macro_rules! any_runtime {
 	($chain:tt, $($code:tt)*) => {
 		match $chain {
-			$crate::opt::Chain::Polkadot => {
+			$crate::opt::Chain::Testnet => {
 				#[allow(unused)]
-				use $crate::static_types::polkadot::MinerConfig;
+				use $crate::static_types::timechain::MinerConfig;
 				$($code)*
 			},
-			$crate::opt::Chain::Kusama => {
+			$crate::opt::Chain::Timechain => {
 				#[allow(unused)]
-				use $crate::static_types::kusama::MinerConfig;
-				$($code)*
-			},
-			$crate::opt::Chain::Westend => {
-				#[allow(unused)]
-				use $crate::static_types::westend::MinerConfig;
+				use $crate::static_types::timechain::MinerConfig;
 				$($code)*
 			},
 		}

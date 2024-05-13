@@ -48,17 +48,15 @@ frame_support::parameter_types! {
 /// The chain being used.
 #[derive(Debug, Copy, Clone)]
 pub enum Chain {
-	Westend,
-	Kusama,
-	Polkadot,
+	Testnet,
+	Timechain,
 }
 
 impl fmt::Display for Chain {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		let chain = match self {
-			Self::Polkadot => "polkadot",
-			Self::Kusama => "kusama",
-			Self::Westend => "westend",
+			Self::Testnet => "analog-testnet",
+			Self::Timechain => "analog-timechain",
 		};
 		write!(f, "{}", chain)
 	}
@@ -69,9 +67,9 @@ impl std::str::FromStr for Chain {
 
 	fn from_str(s: &str) -> Result<Self, Error> {
 		match s {
-			"polkadot" => Ok(Self::Polkadot),
-			"kusama" => Ok(Self::Kusama),
-			"westend" => Ok(Self::Westend),
+			"analog-testnet" => Ok(Self::Testnet),
+			"analog-fastnet" => Ok(Self::Testnet),
+			"analog-timechain" => Ok(Self::Timechain),
 			chain => Err(Error::InvalidChain(chain.to_string())),
 		}
 	}

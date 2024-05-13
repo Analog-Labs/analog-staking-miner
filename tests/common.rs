@@ -1,5 +1,5 @@
 use assert_cmd::cargo::cargo_bin;
-use polkadot_staking_miner::{
+use analog_staking_miner::{
 	opt::Chain,
 	prelude::{runtime, ChainClient},
 };
@@ -81,19 +81,17 @@ pub fn run_staking_miner_playground() -> (KillChildOnDrop, String) {
 }
 
 /// Start a polkadot node on chain polkadot-dev, kusama-dev or westend-dev.
-pub fn run_polkadot_node(chain: Chain) -> (KillChildOnDrop, String) {
-	let chain_str = format!("{}-dev", chain.to_string());
+pub fn run_timechain_node() -> (KillChildOnDrop, String) {
 
 	let mut node_cmd = KillChildOnDrop(
-		process::Command::new("polkadot")
+		process::Command::new("timechain-node")
 			.stdout(process::Stdio::piped())
 			.stderr(process::Stdio::piped())
 			.args([
 				"--chain",
-				&chain_str,
+				"dev",
 				"--tmp",
 				"--alice",
-				"--unsafe-force-node-key-generation",
 				"--execution",
 				"Native",
 				"--offchain-worker=Never",
@@ -158,7 +156,7 @@ pub enum Target {
 
 pub async fn test_submit_solution(target: Target) {
 	let (_drop, ws_url) = match target {
-		Target::Node(chain) => run_polkadot_node(chain),
+		Target::Node(_) => run_timechain_node(),
 		Target::StakingMinerPlayground => run_staking_miner_playground(),
 	};
 

@@ -563,18 +563,14 @@ pub async fn runtime_api_solution_weight<S: Encode + NposSolution + TypeInfo + '
 }
 
 /// Helper to mock the votes based on `voters` and `desired_targets`.
-pub fn mock_votes(voters: u32, desired_targets: u16) -> Option<Vec<(u32, u16)>> {
-	if voters >= desired_targets as u32 {
-		Some((0..voters).zip((0..desired_targets).cycle()).collect())
-	} else {
-		None
-	}
+pub fn mock_votes(voters: u32, desired_targets: u16) -> Vec<(u32, u16)> {
+	(0..voters).zip((0..desired_targets).cycle()).collect()
 }
 
 #[cfg(test)]
 #[test]
 fn mock_votes_works() {
-	assert_eq!(mock_votes(3, 2), Some(vec![(0, 0), (1, 1), (2, 0)]));
-	assert_eq!(mock_votes(3, 3), Some(vec![(0, 0), (1, 1), (2, 2)]));
-	assert_eq!(mock_votes(2, 3), None);
+	assert_eq!(mock_votes(3, 2), vec![(0, 0), (1, 1), (2, 0)]);
+	assert_eq!(mock_votes(3, 3), vec![(0, 0), (1, 1), (2, 2)]);
+	assert_eq!(mock_votes(2, 3), vec![(0, 0), (1, 1)]);
 }
