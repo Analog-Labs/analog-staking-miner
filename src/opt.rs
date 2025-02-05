@@ -67,9 +67,8 @@ impl std::str::FromStr for Chain {
 
 	fn from_str(s: &str) -> Result<Self, Error> {
 		match s {
+			"analog-develop" => Ok(Self::Testnet),
 			"analog-testnet" => Ok(Self::Testnet),
-			"analog-fastnet" => Ok(Self::Testnet),
-			"analog-development" => Ok(Self::Testnet),
 			"analog-timechain" => Ok(Self::Timechain),
 			chain => Err(Error::InvalidChain(chain.to_string())),
 		}
